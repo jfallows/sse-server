@@ -7,6 +7,7 @@ const optionDefinitions = [
   { name: 'input-port', alias: 'i', defaultValue: 9090, type: Number },
   { name: 'http-port', alias: 'p', defaultValue: 9000, type: Number },
   { name: 'verbose', alias: 'v', type: Boolean },
+  { name: 'tty', alias: 't', defaultValue: process.stdin.isTTY, type: Boolean },
   { name: 'help', alias: 'h', type: Boolean }
 ]
 const options = commandLineArgs(optionDefinitions, { camelCase: true })
@@ -38,7 +39,7 @@ if (options.help) {
       console.error('buffer size:', sseServer._buf.length)
     }, 10000)
   }
-  if (!process.stdin.isTTY) {
+  if (!options.tty) {
     process.stdin.setEncoding('utf8')
     process.stdin.on('data', sseServer._onInputSocketReadable.bind(sseServer))
   } else {
