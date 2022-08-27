@@ -34,6 +34,7 @@ class SSEServer {
       this.eventQueue.attachResponse(res)
       this.eventQueue.flush()
     })
+    sse.timeout = 0;
 
     const input = net.createServer(connection => {
       connection.setEncoding('utf8')
