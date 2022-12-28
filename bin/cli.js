@@ -5,11 +5,13 @@ import commandLineUsage from 'command-line-usage'
 
 const optionDefinitions = [
   { name: 'input-port', alias: 'i', defaultValue: 9090, type: Number },
-  { name: 'http-port', alias: 'p', defaultValue: 9000, type: Number },
+  { name: 'https-port', alias: 'p', defaultValue: 9000, type: Number },
+  { name: 'key-path', alias: 'k',  type: String },
+  { name: 'cert-path', alias: 'c',  type: String },
   { name: 'verbose', alias: 'v', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean }
 ]
-const options = commandLineArgs(optionDefinitions, { camelCase: true })
+const options = commandLineArgs(optionDefinitions, { camelCase: true})
 if (options.help) {
   const usage = commandLineUsage([
     {
@@ -28,7 +30,7 @@ if (options.help) {
 } else {
   const sseServer = new SSEServer(options)
   const server = sseServer.createServer()
-  server.sse.listen(options.httpPort, () => console.error(`SSE server: http://localhost:${options.httpPort}`))
+  server.sse.listen(options.httpsPort, () => console.error(`SSE server: https://localhost:${options.httpsPort}`))
   process.on('SIGINT', () => {
     sseServer.eventQueue.end()
     process.exit(0)

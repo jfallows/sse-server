@@ -1,7 +1,8 @@
 import EventQueue from './lib/event-queue.js'
 import { getObject } from './lib/util.js'
-import http from 'http'
+import http2 from 'http2'
 import net from 'net'
+import fs from 'fs'
 
 class SSEServer {
   constructor (options) {
@@ -30,7 +31,14 @@ class SSEServer {
   }
 
   createServer () {
-    const sse = http.createServer((req, res) => {
+
+    const options = {
+      key: fs.readFileSync(this.options.keyPath),
+      cert: fs.readFileSync(this.options.certPath),
+      allowHTTP1: true
+    }
+
+    const sse = http2.createSecureServer(options, (req, res) => {
       this.eventQueue.attachResponse(res)
       this.eventQueue.flush()
     })
