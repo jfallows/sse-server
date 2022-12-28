@@ -11,11 +11,11 @@ Pipe an event stream from terminal to browser.
 
 ## Synopsis
 
-To generate the certificate and key for this example, run:
+To generate the certificate and key.
+
 ```bash
 openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' \
   -keyout localhost-privkey.pem -out localhost-cert.pem
-
 ```
 
 Launch the server.
